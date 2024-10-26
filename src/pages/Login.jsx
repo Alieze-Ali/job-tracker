@@ -4,7 +4,7 @@ import React from 'react';
 const Login = () => {
     return (
         <div>
-            <h1>Login Page</h1>
+            <h2>Login Page</h2>
             {/* Our Login form will go here */}
         </div>
     );
