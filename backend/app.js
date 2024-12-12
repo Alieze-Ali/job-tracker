@@ -4,10 +4,10 @@ const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
 
-const PORT = process.env.PORT;
 
 var authRouter = require('./routes/oauth');
 var requestRouter = require('./routes/request');
+var onboardRouter = require('./routes/onboarding');
 
 app.options('*',function(req,res,next){
     res.header("Access-Control-Allow-Origin", 'http://localhost:5173');
@@ -24,5 +24,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/oauth', authRouter);
 app.use('/request', requestRouter);
+app.use('/onboarding', onboardRouter);
 
 module.exports = app;
