@@ -22,10 +22,20 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h2>Login Page</h2>
+        <h2>Welcome Back!</h2>
+        <p className="register-prompt">
+         Login below or <Link to="/create-account">create an account</Link>
+        </p>
         <form>
+        <button className="btn-auth" type="button" onClick={() => auth()}>
+            <img
+              className="btn-auth-img"
+              src={googleButton}
+              alt="google sign in"
+            />
+          </button>
           <div className="form-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Email</label>
             <input
               type="text"
               id="username"
@@ -44,16 +54,10 @@ const Login = () => {
           <button type="submit" className="login-button">
             Login
           </button>
-          <button className="btn-auth" type="button" onClick={() => auth()}>
-            <img
-              className="btn-auth-img"
-              src={googleButton}
-              alt="google sign in"
-            />
-          </button>
+         
         </form>
-        <p className="register-prompt">
-          Don't have an account? <Link to="/create-account">Register</Link>
+        <p className="forgot-password">
+         <Link to="/forgot-password">Forgot Password</Link>
         </p>
       </div>
     </div>
