@@ -1,14 +1,7 @@
-const express = require("express");
-const router = express.Router();
-const Users = require("../models/onboarding");
+const Users = require("../models/onboarding-models");
 const bcrypt = require("bcrypt");
 
-
-router.get("/", (req, res) => {
-    res.send({api: "up"});
-})
-
-router.post("/register", async (req, res) => {
+const register = async (req, res) => {
     const { email, password, display_name } = req.body;
     try {
         const hash = await bcrypt.hash(password, 10)
@@ -24,9 +17,9 @@ router.post("/register", async (req, res) => {
         res.status(500).json(error);
     }
     
-})
+}
 
-router.post("/login", async (req, res) => {
+const login =  async (req, res) => {
     const {email, password} = req.body;
     try {
         const found = await Users.findOne({ email }).exec();
@@ -37,8 +30,11 @@ router.post("/login", async (req, res) => {
         console.log(error);
         res.json(error);
     }
-   
-})
+}
+
+
+
+
 
 
 function hashPassword(password) {
@@ -50,4 +46,7 @@ function hashPassword(password) {
     });
 }
 
-module.exports = router;
+module.exports = {
+    register,
+    login
+}
