@@ -1,13 +1,15 @@
 const express = require("express");
-const cors = require("cors")
 const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
 
 
-var authRouter = require('./routes/oauth');
-var requestRouter = require('./routes/request');
+var googleAuthRouter = require('./routes/google-oauth');
+var googleRequestRouter = require('./routes/google-request');
 var onboardRouter = require('./routes/onboarding-routes');
+const userRouter = require("./routes/user-routes");
+
+const errorHandlerMiddleware = require("./middleware/error-handler")
 
 app.options('*',function(req,res,next){
     res.header("Access-Control-Allow-Origin", 'http://localhost:5173');
@@ -18,12 +20,14 @@ app.options('*',function(req,res,next){
     next()
   })
 
-//app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/oauth', authRouter);
-app.use('/request', requestRouter);
+app.use('/google-oauth', googleAuthRouter);
+app.use('/google-request', googleRequestRouter);
 app.use('/onboarding', onboardRouter);
+app.use('/dashboard', userRouter);
+
+app.use(errorHandlerMiddleware);
 
 module.exports = app;
