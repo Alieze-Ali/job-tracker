@@ -1,10 +1,10 @@
 const CustomAPIError = require("./custom-error");
 
-class BadRequestError extends CustomAPIError {
+class NotFoundError extends CustomAPIError {
     constructor(message) {
         super(message);
-        this.statusCode = 400;
+        this.statusCode = 404;
     }
 }
 
-module.exports = BadRequestError;
+module.exports = NotFoundError;

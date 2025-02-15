@@ -7,7 +7,7 @@ dotenv.config();
 var googleAuthRouter = require('./routes/google-oauth');
 var googleRequestRouter = require('./routes/google-request');
 var onboardRouter = require('./routes/onboarding-routes');
-const userRouter = require("./routes/user-routes");
+const jobsRouter = require("./routes/jobs-routes");
 
 const errorHandlerMiddleware = require("./middleware/error-handler")
 
@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/google-oauth', googleAuthRouter);
 app.use('/google-request', googleRequestRouter);
 app.use('/onboarding', onboardRouter);
-app.use('/dashboard', userRouter);
+app.use('/jobs', jobsRouter);
 
 app.use(errorHandlerMiddleware);
 

@@ -4,10 +4,10 @@ const router = express.Router();
 
 const {
     dashboard,
-} = require("../controllers/dashboard-controller.js")
+} = require("../controllers/jobs-controller.js")
 
 
-router.route("/").get(dashboard)
+router.route("/dashboard").get(dashboard)
 
 
 module.exports = router;

@@ -1,12 +1,15 @@
-const Users = require("../models/onboarding-models");
+const Users = require("../models/Users");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const asyncWrapper = require("../middleware/async-wrapper")
-const { CustomAPIError } = require("../errors/");
+const { CustomAPIError, BadRequestError, UnauthenticatedError } = require("../errors/");
 
 
 const register = asyncWrapper(async (req, res) => {
     const { email, password, display_name } = req.body;
+
+    if (!email || !password || !display_name) throw new BadRequestError("Please provide email, password, and name.")
+
     try {
         const hash = await bcrypt.hash(password, 10)
         const newUser = await Users.create({
@@ -26,31 +29,23 @@ const login =  asyncWrapper(async (req, res) => {
     const {email, password} = req.body;
     
     if (!email || !password) {
-        throw new CustomAPIError("Please provide email and password", 400)
+        throw new BadRequestError("Please provide email and password.")
     }
 
-    try {    
-        const found = await Users.findOne({ email }).exec();
-        const isMatch = await bcrypt.compare(password, found.password)
-        if (found && isMatch) {
-            try {
-               const token = jwt.sign(
-                {id: found._id, email},
-                process.env.JWT_SECRET,
-                {expiresIn: "1h"}
-               ) 
-                res.status(201).json({msg: "login sucessful", token})  
-            } catch (error) {
-                throw new CustomAPIError("Something went wrong with the token...", 401)
-            }
-            
-        }
-        else throw new CustomAPIError("credentials not found!", 400)  
-    } catch (error) {
-        console.log(error);
-        res.json(error);
-    }
-})
+    const found = await Users.findOne({ email });
+    if (!found) throw new BadRequestError("Email not found.")
+
+    const isMatch = await bcrypt.compare(password, found.password)
+    if (!isMatch) throw new UnauthenticatedError("Invalid credentials.")
+
+    const token = jwt.sign(
+            {id: found._id, email},
+            process.env.JWT_SECRET,
+            {expiresIn: "1h"}) 
+
+    res.status(201).json({msg: "login sucessful", token})  
+
+}) 
 
 
 

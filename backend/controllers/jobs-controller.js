@@ -1,4 +1,4 @@
-const Users = require("../models/onboarding-models");
+const Users = require("../models/Users");
 const jwt = require("jsonwebtoken");
 
 
