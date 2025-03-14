@@ -5,7 +5,7 @@ const router = express.Router();
 const {
     register,
     login,
-} = require("../controllers/onboarding-controller.js")
+} = require("../controllers/user-controller.js")
 
 
 router.route("/register").post(register)

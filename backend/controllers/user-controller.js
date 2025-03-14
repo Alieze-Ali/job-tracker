@@ -2,7 +2,7 @@ const Users = require("../models/Users");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const asyncWrapper = require("../middleware/async-wrapper")
-const { CustomAPIError, BadRequestError, UnauthenticatedError } = require("../errors/");
+const { CustomAPIError, BadRequestError, UnauthenticatedError } = require("../errors");
 
 
 const register = asyncWrapper(async (req, res) => {
