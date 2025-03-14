@@ -25,8 +25,8 @@ app.use(express.urlencoded({ extended: false }));
 
 // app.use('/google-oauth', googleAuthRouter);
 // app.use('/google-request', googleRequestRouter);
-app.use('/user', userRouter);
-app.use('/jobs', jobsRouter);
+app.use('/api/v1/user', userRouter);
+app.use('/api/v1/jobs', jobsRouter);
 
 app.use(errorHandlerMiddleware);
 
