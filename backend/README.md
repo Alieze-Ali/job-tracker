@@ -1,16 +1,26 @@
 # API Documentation
 
+NOTE: When running on local host, the port variable will fall back to 9000 if process.env.PORT is undefined.
+
 ## USER
 
 ### Register
-**POST**  http://localhost:9009/api/v1/user/register
+**POST**  ```/api/v1/user/register```
+
+- Returns the newly created user as the body of the response.
+- If request body is missing any required fields, responds with a status code 400.
+
+| Field        | Data Type | Required? | Notes                          |
+| -----------  | --------- | --------- |------------------------------- |
+| email        | string    | Yes       | Must be a valid email address. |
+| password     | string    | Yes       | Restraints: 6 character minimum
+| display_name | string    | Yes       | Restraints: 2 - 50 characters
 
 #### Request Body
 ``` json
 {
-    "username": "openforwork",
-    "password": "asecret",
     "email": "marysue@email.com",
+    "password": "asecret",
     "display_name": "Mary"
 }
 ```
@@ -18,21 +28,28 @@
 #### Response Body
 ``` json
 {
-    "username": "openforwork",
-    "password": "3N{ryPt3d.p@S5w0Rd",
     "email": "marysue@email.com",
+    "password": "3N{ryPt3d.p@S5w0Rd",
     "display_name": "Mary"
 }
 ```
 
-
 ### Login
-**POST**  http://localhost:9009/api/v1/user/login
+POST  ```/api/v1/user/login```
+
+- Returns a success message and token as the body of the response.
+- If request body is missing any required fields or field validation fails, responds with a status code 400 and error message (ex. ```{msg: "Email is required"}```).
+- If credentials in request body cannot be authenticated, responds with a status code 401.
+
+| Field        | Data Type | Required? | Notes                          |
+| -----------  | --------- | --------- |------------------------------- |
+| email        | string    | Yes       | Must be a valid email address. |
+| password     | string    | Yes       | Restraints: 6 character minimum
 
 #### Request Body
 ``` json
 {
-    "username": "maryislooking",
+    "email": "marysue@email.com",
     "password": "asecret",
 }
 ```
